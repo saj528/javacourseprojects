@@ -6,6 +6,7 @@ public class HomeBuyer {
     private String homeBuyersName;
     private double yearlyIncome;
     private double monthlyIncome;
+    private double downPayment;
     private double rate;
     private double principal;
     private double monthlyPayment;
@@ -21,6 +22,7 @@ public class HomeBuyer {
     public void loanReport(){
         calculateMortgage();
         calculateDebtToIncomeRatio();
+        calculateDownPayment();
         System.out.println(toString());
     }
 
@@ -51,6 +53,11 @@ public class HomeBuyer {
         return debtToIncomeRatio;
     }
 
+    public double calculateDownPayment(){
+        downPayment = principal * .20;
+        return downPayment;
+    }
+
 
     @Override
     public String toString() {
@@ -60,6 +67,7 @@ public class HomeBuyer {
                 " Monthly Income: $" + monthlyIncome + "\n" +
                 " Interest Rate: " + rate + "\n" +
                 " Principal Amount: $" + principal + "\n" +
+                " Down Payment: $" + downPayment + "\n" +
                 " Monthly Payment: $" + monthlyPayment + "\n" +
                 " Debt to Income Ratio: " + debtToIncomeRatio + "\n" +
                 " Term of Loan: " + time + " years";
