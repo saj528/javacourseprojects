@@ -10,7 +10,8 @@ public class HomeBuyer {
     private double rate;
     private double principal;
     private double monthlyPayment;
-    private int debtToIncomeRatio;
+    private double debt;
+    private double debtToIncomeRatio;
     private int time;
 
     public HomeBuyer(String homeBuyersName, long yearlyIncome) {
@@ -27,7 +28,7 @@ public class HomeBuyer {
     }
 
 
-    public double calculateMortgage(){
+    public void calculateMortgage(){
 
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter Principal Amount : ");
@@ -41,21 +42,21 @@ public class HomeBuyer {
         time = scan.nextInt();
         int months = time * 12;
 
+        System.out.print("How much do you currently pay monthly towards debt? : ");
+        debt = scan.nextDouble();
+
         monthlyPayment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
         monthlyPayment = Math.round(monthlyPayment);
-        return monthlyPayment;
 
     }
 
 
-    public int calculateDebtToIncomeRatio(){
-        debtToIncomeRatio = (int) monthlyIncome /  (int) monthlyPayment;
-        return debtToIncomeRatio;
+    public void calculateDebtToIncomeRatio(){
+        debtToIncomeRatio = (( monthlyPayment + debt) / monthlyIncome) * 100;
     }
 
-    public double calculateDownPayment(){
+    public void calculateDownPayment(){
         downPayment = principal * .20;
-        return downPayment;
     }
 
 
@@ -65,11 +66,12 @@ public class HomeBuyer {
                 "Home Buyers Name: " + homeBuyersName + "\n" +
                 " Yearly Income: $" + yearlyIncome + "\n" +
                 " Monthly Income: $" + monthlyIncome + "\n" +
-                " Interest Rate: " + rate + "\n" +
+                " Interest Rate: " + rate + "%" + "\n" +
                 " Principal Amount: $" + principal + "\n" +
                 " Down Payment: $" + downPayment + "\n" +
-                " Monthly Payment: $" + monthlyPayment + "\n" +
-                " Debt to Income Ratio: " + debtToIncomeRatio + "\n" +
+                " Monthly House Payment: $" + monthlyPayment + "\n" +
+                " Total Monthly Payments: $" + (monthlyPayment + debt) + "\n" +
+                " Debt to Income Ratio: " + debtToIncomeRatio + "%" + "\n" +
                 " Term of Loan: " + time + " years";
     }
 }
