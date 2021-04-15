@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class TaskTrackingApp {
 
     private ArrayList<Task> tasks = new ArrayList<>();
-    static Scanner scanner = new Scanner(System.in);
+    static Scanner scannerInt = new Scanner(System.in);
+    static Scanner scannerString = new Scanner(System.in);
 
     public void start(){
         while(true){
@@ -17,7 +18,7 @@ public class TaskTrackingApp {
                     "4. Delete a task\n" +
                     "5. Quit\n"
             );
-            int choice = scanner.nextInt();
+            int choice = scannerInt.nextInt();
             switch (choice){
                 case 1:  listTasks();
                     continue;
@@ -66,7 +67,7 @@ public class TaskTrackingApp {
 
     private void addTask() {
         System.out.println("Type the task you would like to add.\n");
-        String task = scanner.nextLine();
+        String task = scannerString.nextLine();
         tasks.add(new Task(task));
         System.out.println("Task added...\n");
     }
@@ -74,7 +75,7 @@ public class TaskTrackingApp {
     private void completeTask() {
         incompleteTasksPrint();
         System.out.println("Type the number of the task you wish to mark complete.\n");
-        int task = scanner.nextInt();
+        int task = scannerInt.nextInt();
         if(tasks.get(task) != null && !tasks.get(task).isCompleted()){
             tasks.get(task).taskCompleted();
         }else{
@@ -85,7 +86,7 @@ public class TaskTrackingApp {
     private void deleteTask() {
         listTasks();
         System.out.println("Type the number of the task you wish to delete.\n");
-        int task = scanner.nextInt();
+        int task = scannerInt.nextInt();
         if(tasks.get(task) != null){
             tasks.remove(task);
         }else{
