@@ -38,7 +38,7 @@ public class TaskTrackingApp {
                     continue;
                 case 6:
                     System.out.println("App terminating...");
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid response...");;
                     continue;
@@ -112,9 +112,8 @@ public class TaskTrackingApp {
         bufferedWriter.write("--Tasks--");
         bufferedWriter.newLine();
         for(int i = 0; i < tasks.size();i++){
-            bufferedWriter.write(tasks.get(i).getTask() +" : "
-                    + (tasks.get(i).isCompleted() ? "completed" : "incomplete")
-                    + ", ");
+            bufferedWriter.write(tasks.get(i).getTask() +","
+                    + (tasks.get(i).isCompleted() ? "completed\n" : "incomplete\n2"));
         }
         bufferedWriter.close();
         fileWriter.close();
