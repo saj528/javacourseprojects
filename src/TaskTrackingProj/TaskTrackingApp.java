@@ -1,5 +1,9 @@
 package TaskTrackingProj;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,14 +13,16 @@ public class TaskTrackingApp {
     static Scanner scannerInt = new Scanner(System.in);
     static Scanner scannerString = new Scanner(System.in);
 
-    public void start(){
+    public void start() throws IOException {
         while(true){
             System.out.println("Type the number of the option you want.\n" +
                     "1. List tasks\n" +
                     "2. Add a task\n" +
                     "3. Complete a task\n" +
                     "4. Delete a task\n" +
-                    "5. Quit\n"
+                    "5. Export tasks to CSV file\n" +
+                    "6. Quit\n"
+
             );
             int choice = scannerInt.nextInt();
             switch (choice){
@@ -28,7 +34,9 @@ public class TaskTrackingApp {
                     continue;
                 case 4:  deleteTask();
                     continue;
-                case 5:
+                case 5:  exportToCsv();
+                    continue;
+                case 6:
                     System.out.println("App terminating...");
                     break;
                 default:
@@ -38,8 +46,6 @@ public class TaskTrackingApp {
             }
         }
     }
-
-
 
     private void listTasks() {
         System.out.println("Tasks to do: ");
@@ -66,7 +72,7 @@ public class TaskTrackingApp {
     }
 
     private void addTask() {
-        System.out.println("Type the task you would like to add.\n");
+        System.out.println("Type the task you would like to add...\n");
         String task = scannerString.nextLine();
         tasks.add(new Task(task));
         System.out.println("Task added...\n");
@@ -74,7 +80,7 @@ public class TaskTrackingApp {
 
     private void completeTask() {
         incompleteTasksPrint();
-        System.out.println("Type the number of the task you wish to mark complete.\n");
+        System.out.println("Type the number of the task you wish to mark complete...\n");
         int task = scannerInt.nextInt();
         if(tasks.get(task) != null && !tasks.get(task).isCompleted()){
             tasks.get(task).taskCompleted();
@@ -85,7 +91,7 @@ public class TaskTrackingApp {
 
     private void deleteTask() {
         listTasks();
-        System.out.println("Type the number of the task you wish to delete.\n");
+        System.out.println("Type the number of the task you wish to delete...\n");
         int task = scannerInt.nextInt();
         if(tasks.get(task) != null){
             tasks.remove(task);
@@ -94,5 +100,25 @@ public class TaskTrackingApp {
         }
     }
 
+    public void exportToCsv() throws IOException {
+        if(tasks.isEmpty()){
+            System.out.println("No tasks to export...\n");
+            return;
+        }
+
+        File file = new File("tasks.csv");
+        FileWriter fileWriter = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write("--Tasks--");
+        bufferedWriter.newLine();
+        for(int i = 0; i < tasks.size();i++){
+            bufferedWriter.write(tasks.get(i).getTask() +" : "
+                    + (tasks.get(i).isCompleted() ? "completed" : "incomplete")
+                    + ", ");
+        }
+        bufferedWriter.close();
+        fileWriter.close();
+        System.out.println("Tasks have been exported to tasks.csv");
+    }
 
 }
